@@ -7,6 +7,19 @@ It supports both HOTP (according to [RFC 4226](https://datatracker.ietf.org/doc/
 
 Both HOTP and TOTP have been tested according to the RFC example values.
 
+## Installation
+```
+npm i -s @control/otp --no-optional
+```
+
+As a matter of fact, this package also has a CLI, which uses an optional dependency.
+If you're looking to use this programatically, you can skip that dependency.
+
+### Installation for CLI
+```
+npm i -g @control/otp
+```
+
 ## HOTP
 HOTP (HMAC One Time Password) is an algorithm to generate one-time-use passwords. These are generated
 according to a counter, which is supposed to change on every use (hence the one-time-use).

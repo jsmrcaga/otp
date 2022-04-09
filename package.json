@@ -6,6 +6,9 @@
   "scripts": {
     "test": "mocha --recursive --exit ./test"
   },
+  "bin": {
+    "otp": "./cli/entry.js"
+  },
   "keywords": [],
   "author": "Jo Colina <jo@jocolina.com>",
   "license": "MIT",
@@ -16,5 +19,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "optionalDependencies": {
+    "argumentate": "^3.0.0"
   }
 }
