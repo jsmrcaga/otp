@@ -1,0 +1,37 @@
+name: Test & Publish
+
+on:
+  pull_request:
+    branches:
+      - master
+  release:
+    types:
+      - published
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm i
+      - run: npm test
+
+  publish:
+    name: Publish to NPM
+
+    needs:
+      - test
+
+    if: ${{ github.event_name == 'release' }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm i
+      - run: npm version ${{ github.event.release.tag_name }} --git-tag-version=false
+      - run: npm publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
