@@ -69,6 +69,14 @@ class OTPCli {
 			const file_config = ns[id];
 
 			if(!file_config) {
+				// search all other namespaces
+				for(const [namespace, namespace_entries] of Object.entries(config)) {
+					if(namespace_entries[id]) {
+						console.log(`Found ${bold(id)} on namespace ${bold(namespace)}`);
+						return this.totp(namespace_entries[id]);
+					}
+				}
+
 				throw new Error(`No config "${id}" on namespace "${namespace}"`);
 			}
 

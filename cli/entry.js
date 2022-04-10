@@ -38,10 +38,6 @@ const { options, variables } = argumentate({
 			key: 'file',
 			help: 'The path of the config file to use'
 		},
-		i: {
-			key: 'id',
-			help: 'The id of the saved configuration'
-		},
 		u: {
 			key: 'url',
 			help: 'The url to store the 2FA information'
@@ -72,13 +68,13 @@ const {
 	date,
 	key,
 	file,
-	id,
+	namespace,
 	save,
 	url,
 	list
 } = options;
 
-const [namespace] = variables;
+const [id] = variables;
 
 const otp = new OTPCLI({
 	alg,
@@ -87,7 +83,7 @@ const otp = new OTPCLI({
 });
 
 try {
-	if(list) {
+	if(list || (!id && !save)) {
 		return otp.list().catch(e => {
 			console.error(e);
 			process.exit(1);
