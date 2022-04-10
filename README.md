@@ -20,6 +20,17 @@ If you're looking to use this programatically, you can skip that dependency.
 npm i -g @control/otp
 ```
 
+#### Usage:
+```
+otp [id] [options]
+```
+
+When no ID and no options are provided, the list of saved configurations will be returned.
+To know more use:
+```
+otp -h
+```
+
 ## HOTP
 HOTP (HMAC One Time Password) is an algorithm to generate one-time-use passwords. These are generated
 according to a counter, which is supposed to change on every use (hence the one-time-use).
