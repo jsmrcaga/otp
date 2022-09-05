@@ -1,5 +1,6 @@
 name: Test & Publish
 
+
 on:
   pull_request:
     branches:
@@ -20,6 +21,11 @@ jobs:
 
   publish:
     name: Publish to NPM
+
+    concurrency: production
+    environment:
+      name: production
+      url: https://www.npmjs.com/package/@control/otp
 
     needs:
       - test
