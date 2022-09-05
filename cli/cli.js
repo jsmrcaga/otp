@@ -46,7 +46,7 @@ class OTPCli {
 		return fs.writeFile(this.file, b64);
 	}
 
-	totp({ key, alg, period, date, digits }) {
+	totp({ key, alg, period, date, digits }={}) {
 		const totp = new TOTP({
 			key,
 			period,
@@ -59,7 +59,7 @@ class OTPCli {
 		});
 	}
 
-	from_config({ id, namespace=DEFAULT_NS }) {
+	from_config({ id, namespace=DEFAULT_NS }={}) {
 		return this.read_config().then(config => {
 			const ns = config[namespace];
 			if(!ns) {
@@ -68,7 +68,7 @@ class OTPCli {
 
 			const file_config = ns[id];
 
-			if(!file_config) {
+			if(!file_config && namespace === DEFAULT_NS) {
 				// search all other namespaces
 				for(const [namespace, namespace_entries] of Object.entries(config)) {
 					if(namespace_entries[id]) {
@@ -77,6 +77,11 @@ class OTPCli {
 					}
 				}
 
+				throw new Error(`No config "${id}" on any namespace`);
+
+			}
+
+			if(!file_config) {
 				throw new Error(`No config "${id}" on namespace "${namespace}"`);
 			}
 
@@ -98,7 +103,7 @@ class OTPCli {
 		}));
 	}
 
-	save({ id, url, namespace, key, period, digits }) {
+	save({ id, url, namespace, key, period, digits }={}) {
 		if(namespace === DEFAULT_NS) {
 			throw new Error('namespace 0x00 is reserved');
 		}
