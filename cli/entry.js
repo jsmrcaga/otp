@@ -16,11 +16,11 @@ const { options, variables } = argumentate({
 	mapping: {
 		a: {
 			key: 'alg',
-			help: 'Hashing algorithm to use, valid options are sha1, sha256 and sha512. Default will be sha256'
+			help: 'Hashing algorithm to use, valid options are sha1, sha256 and sha512. Default will be sha1'
 		},
 		k: {
 			key: 'key',
-			help: 'They secret key to use'
+			help: 'They secret key to use (b32)'
 		},
 		x: {
 			key: 'digits',
@@ -62,7 +62,7 @@ const { options, variables } = argumentate({
 });
 
 const {
-	alg = 'sha256',
+	alg = 'sha1',
 	digits = 6,
 	period = 30,
 	date,
@@ -83,7 +83,7 @@ const otp = new OTPCLI({
 });
 
 try {
-	if(list || (!id && !save)) {
+	if(list) {
 		return otp.list().catch(e => {
 			console.error(e);
 			process.exit(1);
