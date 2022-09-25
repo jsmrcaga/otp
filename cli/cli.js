@@ -1,6 +1,7 @@
 const os = require('os');
 const fs = require('fs/promises');
 const { URL } = require('url');
+const { decode: from_b32 } = require('thirty-two');
 
 const TOTP = require('../totp');
 
@@ -16,9 +17,9 @@ const gray = (text) => {
 };
 
 class OTPCli {
-	constructor({ alg='sha256',  key, file }) {
+	constructor({ alg='sha1',  key, file }) {
 		this.alg = alg;
-		this.key = key;
+		this.key = key ? from_b32(key) : null;
 		this.file = file || DEFAULT_FILE;
 	}
 
@@ -122,7 +123,7 @@ class OTPCli {
 			}
 
 			params = {
-				key,
+				key: from_b32(key),
 				id: decodeURIComponent(parsed_url.searchParams.get('issuer')),
 				name: decodeURIComponent(parsed_url.pathname.replace(/^\//, '')),
 				alg: parsed_url.searchParams.get('algorithm') || this.alg,
