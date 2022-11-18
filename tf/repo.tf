@@ -5,6 +5,8 @@ module repo {
   description = "A simple NodeJS 2FA TOTP and HOTP generator"
   topics = ["totp", "2fa", "hotp", "node", "nodejs"]
 
+  visibility = "public"
+
   actions = {
     secrets = {
       NPM_TOKEN = var.npm_token
