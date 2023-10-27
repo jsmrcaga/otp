@@ -6,7 +6,7 @@ class TOTP extends HOTP {
 		this.period = period;
 	}
 
-	compute_counter(counter=Date.now()) {
+	compute_counter(counter=Math.round(Date.now() / 1000)) {
 		// TODO: handle timezones
 		const seconds_since_epoch = counter;
 		const number_of_periods = Math.floor(seconds_since_epoch / this.period);
